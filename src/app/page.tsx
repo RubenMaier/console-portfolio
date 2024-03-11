@@ -235,7 +235,7 @@ export default function Home() {
           <p className="flex-1 text-center">rubenmaierenzler@desktop</p>
         </div>
         <div
-          className="flex max-h-[500px] flex-col overflow-auto bg-slate-600 p-4 sm:h-[500px]"
+          className="flex h-[200px] max-h-[500px] flex-col overflow-auto bg-slate-600 p-4 lg:h-[500px]"
           ref={scrollRef}
         >
           {commandsRan?.map((h, index) => (
