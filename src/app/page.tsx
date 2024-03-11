@@ -1,112 +1,293 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useRef, useState } from "react";
+
+interface CommandRan {
+  commandExecuted: string;
+  actionShowed: { __html: string };
+}
+
+const defaultConsoleMessage: CommandRan = {
+  commandExecuted: "",
+  actionShowed: {
+    __html: `<span class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2">Welcome to my portfolio!</span><br /> To display the available commands type <b class="text-red-300">help</b>. To validate each command press Enter.`,
+  },
+};
 
 export default function Home() {
+  const scrollRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [commandValueInserted, setCommandValueInserted] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const [commandsHistory, addCommandInHistory] = useState<string[]>([]);
+  const [commandsRan, setCommandsRan] = useState<CommandRan[]>([
+    defaultConsoleMessage,
+  ]);
+  const [guestName, setGuestName] = useState("guest");
+  const [consoleCommandSeek, setConsoleCommandSeek] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowCursor((currentShowCursor) => !currentShowCursor);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [commandsRan]);
+
+  function sendCommand(e: any) {
+    if (e.key === "Enter") {
+      if (commandValueInserted) {
+        const actualCommand: CommandRan = {
+          commandExecuted: commandValueInserted,
+          actionShowed: printCommand(commandValueInserted),
+        };
+        addCommandInHistory([...commandsHistory, commandValueInserted]);
+        setCommandsRan([...commandsRan, actualCommand]);
+        handleCommand(commandValueInserted);
+        setCommandValueInserted("");
+      }
+    } else if (e.key === "ArrowUp") {
+      if (commandsHistory) {
+        const seekValue =
+          consoleCommandSeek === commandsHistory.length
+            ? consoleCommandSeek
+            : consoleCommandSeek + 1;
+        setConsoleCommandSeek(seekValue);
+        setCommandValueInserted(
+          commandsHistory[commandsHistory.length - seekValue],
+        );
+        console.log(
+          consoleCommandSeek,
+          commandsHistory.length,
+          seekValue,
+          commandsHistory.length - seekValue,
+          commandsHistory[commandsHistory.length - seekValue],
+        );
+      }
+    } else if (e.key === "ArrowDown") {
+      if (commandsHistory && consoleCommandSeek > 0) {
+        const seekValue = consoleCommandSeek - 1;
+        setConsoleCommandSeek(seekValue);
+        setCommandValueInserted(
+          commandsHistory[commandsHistory.length - seekValue - 1],
+        );
+      } else if (consoleCommandSeek === 0) {
+        setCommandValueInserted("");
+      }
+    }
+  }
+
+  function printCommand(commandValueInserted: string) {
+    if (commandValueInserted === "help") {
+      return {
+        __html: `
+      <ui>
+        <li>
+          <b class="text-red-300">clear</b>: Clean the terminal
+        </li>
+        <li>
+          <b class="text-red-300">help</b>: Displays the list of commands
+        </li>
+        <li>
+          <b class="text-red-300">login</b> [your-name]: Use the console with your name
+        </li>
+        <li>
+          <b class="text-red-300">see profile</b>: Display information about me
+        </li>
+        <li>
+          <b class="text-red-300">see experiences</b>: Display a list of my expriences
+        </li>
+        <li>
+          <b class="text-red-300">see hobbies</b>: Display a list of my hobbies
+        </li>
+        <li>
+          <b class="text-red-300">open linkedin</b>: Link to my Linkedin
+        </li>
+        <li>
+          <b class="text-red-300">open github</b>: Link to my Github
+        </li>
+        <li>
+          You can find the old command with the up and down arrows
+        </li>
+      </ui>`,
+      };
+    }
+    const firstCommand = commandValueInserted.split(" ");
+    if (firstCommand[0] && firstCommand[0] === "see") {
+      if (firstCommand[1] === "profile") {
+        return {
+          __html: `<pre><code id="jsonPretty" class="text-xs lg:text-sm overflow-auto">{
+    "fullname": "Ruben Maier Enzler",
+    "age": "${Math.floor((new Date().getTime() - new Date("1994-11-13").getTime()) / (365.25 * 24 * 60 * 60 * 1000))}",
+    "formation": "Information Systems Engineering",
+    "languages" : "js, ts, css, tailwind, html, python, c#, c, bash, java, sql"
+    "databases": "mysql, postgresql, sqlite, mongodb, elasticsearch, algolia, neo4j",
+    "framework" : "nest, express, next, reactm  django",
+    "tools": "git, aws, azure, gcp, vercel, heroku, figma",
+    "softSkills": "business strategy, product definitions, agile method, teamwork",
+    "favoriteIDE": "vim, vsc",
+    "favoriteTerm": "warp",
+    "city" : "Bs As, Argentina",
+    "yearsWorkingFormally": "${Math.floor((new Date().getTime() - new Date("2016-01-01").getTime()) / (365.25 * 24 * 60 * 60 * 1000))}",
+    "yearsDeveloping": "${Math.floor((new Date().getTime() - new Date("2010-05-05").getTime()) / (365.25 * 24 * 60 * 60 * 1000))}"
+}</code></pre>
+        `,
+        };
+      }
+      if (firstCommand[1] === "hobbies") {
+        return {
+          __html: `<pre><code id="jsonPretty" class="text-xs lg:text-sm overflow-auto">{
+    "tech" : "3D Print, Arduino, Raspberry Pi",
+    "crafts": "Carpentry, Smithy",
+    "learns": "Design, Marketing, Entrepreneurship, Investments",
+    "sport": "Crossfit, Tactical shooting training, MMA, Shaolin Kung Fu, Swimming",
+    "architecture": "Japandi, Mid Century, Minimalism",
+    "life" : "Trekking, Home Food, Orchard, Vikings"
+}</code></pre>
+        `,
+        };
+      }
+      if (firstCommand[1] === "experiences") {
+        return {
+          __html: `<ui>
+          <li>
+            <span class="text-yellow-300">oct 2020 - current</span> -> <b class="text-red-300"><a href="https://rebill.com" target="_blank" style="text-decoration: none; color: inherit;">Rebill</a></b> -> I started at Rebill as a frontend engineer when there were just four of us in the company. Shortly after, I took full ownership of the product. A year after I joined, we made it into Y Combinator, and I was promoted to Head of Tech. I hired a team, designed, planned, and conceived the entire product as it is today. By the end of 2023, I joined the founding team, though I had always been there, doing whatever was necessary for us to excel.
+          </li>
+          <li>
+          <span class="text-yellow-300">Jun 2020 - Oct 2020</span> -> <b class="text-red-300"><a href="https://exomindset.co/en" target="_blank" style="text-decoration: none; color: inherit;">ExoMindset</a></b> -> For Walmart, I developed a web scraping tool that enabled competitive product comparison and pricing strategies. In a separate project for the Municipality of Cordoba, Argentina, I spearheaded the modernization of their licensing systems, transitioning them from outdated applications to a streamlined web-based solution. Throughout both projects, my focus on quality, efficiency, and direct communication with teams and clients ensured successful outcomes.
+          </li>
+          <li>
+          <span class="text-yellow-300">Nov 2016 - Oct 2017</span> -> I established and managed my own software development studio, specializing in custom solutions and forum personalization for platforms like WordPress, Joomla, and phpBB. I expanded into 3D modeling, using Blender and Autodesk 3ds Max for game modifications, and collaborated on algorithm implementation in Unity using C#. Additionally, I provided support for C++ and Python libraries, enhancing my technical expertise and meeting unique client needs.
+          </li>
+          <li>
+          <span class="text-yellow-300">Jan 2016 - Feb 2017</span> -> As a gaming community consultant, I improved community engagement and brand visibility through targeted SEO strategies and impactful collateral created with Adobe Photoshop and Illustrator. I also developed and optimized commercial websites, contributing significantly to the growth and online presence of communities.
+          </li>
+        </ui>`,
+        };
+      }
+      return { __html: `Invalid argument.</p>` };
+    }
+    if (firstCommand[0] && firstCommand[0] === "login") {
+      if (firstCommand[1]) {
+        return { __html: `<p>Welcome ${firstCommand[1]}!</p>` };
+      }
+      return { __html: `<p>login [your-name]: Add your name to login.</p>\n` };
+    }
+    if (firstCommand[0] && firstCommand[0] === "open") {
+      if (firstCommand[1] === "linkedin") {
+        return {
+          __html:
+            "<p>Thank you for visiting my Linkedin, I hope link soon!</p>",
+        };
+      }
+      if (firstCommand[1] === "github") {
+        return {
+          __html:
+            "<p>Thank you for visiting my Github, I hope help you soon!</p>",
+        };
+      }
+      return { __html: `Invalid argument.</p>` };
+    }
+    return {
+      __html: `
+      <p>${commandValueInserted}: command not found</p>\n
+      <p>Type the command <b class="text-red-300">help</b> to display hte list of avaiable commands.</p>`,
+    };
+  }
+
+  function handleCommand(commandValueInserted: string) {
+    if (commandValueInserted === "clear") {
+      setCommandsRan([]);
+    }
+    const firstCommand = commandValueInserted.split(" ");
+    if (firstCommand[0] && firstCommand[0] === "login" && firstCommand[1]) {
+      setGuestName(firstCommand[1]);
+    }
+    if (firstCommand[0] && firstCommand[0] === "open") {
+      if (firstCommand[1] === "linkedin") {
+        window.open("https://www.linkedin.com/in/rubenmaierenzler", "_blank");
+      }
+      if (firstCommand[1] === "github") {
+        window.open("https://github.com/RubenMaier", "_blank");
+      }
+    }
+  }
+  const enfocarInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex items-center justify-center min-h-screen">
+      <div className="h-full m-4 w-[800px]" onClick={enfocarInput}>
+        <div className="flex bg-slate-500 items-center p-2 rounded-t-xl">
+          <div className="flex">
+            <div className="w-3 h-3 bg-red-400 rounded-full ml-3"></div>
+            <div className="w-3 h-3 bg-yellow-400 rounded-full ml-2"></div>
+            <div className="w-3 h-3 bg-green-400 rounded-full ml-2"></div>
+          </div>
+          <p className="text-center flex-1">rubenmaierenzler@desktop</p>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div
+          className="flex flex-col bg-slate-600 overflow-auto p-4 max-h-[500px] sm:h-[500px]"
+          ref={scrollRef}
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+          {commandsRan?.map((h, index) => (
+            <div key={index} className="h-max">
+              {h.commandExecuted ? (
+                <>
+                  <p className="mb-2">
+                    <b className="text-slate-300">
+                      {guestName}: ~/rub/portfolio:
+                    </b>{" "}
+                    {h.commandExecuted}
+                  </p>
+                  <div
+                    className="ml-8 mb-8"
+                    dangerouslySetInnerHTML={h.actionShowed}
+                  ></div>
+                </>
+              ) : (
+                <div
+                  className="mb-8"
+                  dangerouslySetInnerHTML={h.actionShowed}
+                ></div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex">
+          <div className="bg-slate-900 flex-none p-2 rounded-bl-xl">
+            <p className="pl-5">&gt; {guestName}: ~/rub/portfolio:</p>
+          </div>
+          <div className="bg-slate-800 w-full p-2 rounded-br-xl">
+            <input
+              ref={inputRef}
+              type="text"
+              className="bg-transparent border-none outline-none w-full"
+              value={
+                !isFocused && !commandValueInserted
+                  ? showCursor
+                    ? "|"
+                    : ""
+                  : commandValueInserted
+              }
+              onChange={(e) => setCommandValueInserted(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => {
+                setIsFocused(false);
+                setConsoleCommandSeek(0);
+              }}
+              onKeyDown={(e) => sendCommand(e)}
+            />
+          </div>
+        </div>
       </div>
     </main>
   );
