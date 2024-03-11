@@ -9,7 +9,7 @@ interface CommandRan {
 const defaultConsoleMessage: CommandRan = {
   commandExecuted: "",
   actionShowed: {
-    __html: `<span class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2">Welcome to my portfolio!</span><br /> To display the available commands type <b class="text-red-300">help</b>. To validate each command press Enter.`,
+    __html: `<span class="box-decoration-slice bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2">Welcome to my portfolio!</span><br /> To display the available commands type <b class="text-neo-pink">help</b>. To validate each command press Enter.`,
   },
 };
 
@@ -88,28 +88,28 @@ export default function Home() {
         __html: `
       <ui>
         <li>
-          <b class="text-red-300">clear</b>: Clean the terminal
+          <b class="text-neo-pink">clear</b>: Clean the terminal
         </li>
         <li>
-          <b class="text-red-300">help</b>: Displays the list of commands
+          <b class="text-neo-pink">help</b>: Displays the list of commands
         </li>
         <li>
-          <b class="text-red-300">login</b> [your-name]: Use the console with your name
+          <b class="text-neo-pink">login</b> [your-name]: Use the console with your name
         </li>
         <li>
-          <b class="text-red-300">see profile</b>: Display information about me
+          <b class="text-neo-pink">see profile</b>: Display information about me
         </li>
         <li>
-          <b class="text-red-300">see experiences</b>: Display a list of my expriences
+          <b class="text-neo-pink">see experiences</b>: Display a list of my expriences
         </li>
         <li>
-          <b class="text-red-300">see hobbies</b>: Display a list of my hobbies
+          <b class="text-neo-pink">see hobbies</b>: Display a list of my hobbies
         </li>
         <li>
-          <b class="text-red-300">open linkedin</b>: Link to my Linkedin
+          <b class="text-neo-pink">open linkedin</b>: Link to my Linkedin
         </li>
         <li>
-          <b class="text-red-300">open github</b>: Link to my Github
+          <b class="text-neo-pink">open github</b>: Link to my Github
         </li>
         <li>
           You can find the old command with the up and down arrows
@@ -156,16 +156,16 @@ export default function Home() {
         return {
           __html: `<ui>
           <li>
-            <span class="text-yellow-300">oct 2020 - current</span> -> <b class="text-red-300"><a href="https://rebill.com" target="_blank" style="text-decoration: none; color: inherit;">Rebill</a></b> -> I started at Rebill as a frontend engineer when there were just four of us in the company. Shortly after, I took full ownership of the product. A year after I joined, we made it into Y Combinator, and I was promoted to Head of Tech. I hired a team, designed, planned, and conceived the entire product as it is today. By the end of 2023, I joined the founding team, though I had always been there, doing whatever was necessary for us to excel.
+            <span class="text-neo-blue">oct 2020 - current</span> -> <b class="text-neo-pink"><a href="https://rebill.com" target="_blank" style="text-decoration: none; color: inherit;">Rebill</a></b> -> I started at Rebill as a frontend engineer when there were just four of us in the company. Shortly after, I took full ownership of the product. A year after I joined, we made it into Y Combinator, and I was promoted to Head of Tech. I hired a team, designed, planned, and conceived the entire product as it is today. By the end of 2023, I joined the founding team, though I had always been there, doing whatever was necessary for us to excel.
           </li>
           <li>
-          <span class="text-yellow-300">Jun 2020 - Oct 2020</span> -> <b class="text-red-300"><a href="https://exomindset.co/en" target="_blank" style="text-decoration: none; color: inherit;">ExoMindset</a></b> -> For Walmart, I developed a web scraping tool that enabled competitive product comparison and pricing strategies. In a separate project for the Municipality of Cordoba, Argentina, I spearheaded the modernization of their licensing systems, transitioning them from outdated applications to a streamlined web-based solution. Throughout both projects, my focus on quality, efficiency, and direct communication with teams and clients ensured successful outcomes.
+          <span class="text-neo-blue">Jun 2020 - Oct 2020</span> -> <b class="text-neo-pink"><a href="https://exomindset.co/en" target="_blank" style="text-decoration: none; color: inherit;">ExoMindset</a></b> -> For Walmart, I developed a web scraping tool that enabled competitive product comparison and pricing strategies. In a separate project for the Municipality of Cordoba, Argentina, I spearheaded the modernization of their licensing systems, transitioning them from outdated applications to a streamlined web-based solution. Throughout both projects, my focus on quality, efficiency, and direct communication with teams and clients ensured successful outcomes.
           </li>
           <li>
-          <span class="text-yellow-300">Nov 2016 - Oct 2017</span> -> I established and managed my own software development studio, specializing in custom solutions and forum personalization for platforms like WordPress, Joomla, and phpBB. I expanded into 3D modeling, using Blender and Autodesk 3ds Max for game modifications, and collaborated on algorithm implementation in Unity using C#. Additionally, I provided support for C++ and Python libraries, enhancing my technical expertise and meeting unique client needs.
+          <span class="text-neo-blue">Nov 2016 - Oct 2017</span> -> I established and managed my own software development studio, specializing in custom solutions and forum personalization for platforms like WordPress, Joomla, and phpBB. I expanded into 3D modeling, using Blender and Autodesk 3ds Max for game modifications, and collaborated on algorithm implementation in Unity using C#. Additionally, I provided support for C++ and Python libraries, enhancing my technical expertise and meeting unique client needs.
           </li>
           <li>
-          <span class="text-yellow-300">Jan 2016 - Feb 2017</span> -> As a gaming community consultant, I improved community engagement and brand visibility through targeted SEO strategies and impactful collateral created with Adobe Photoshop and Illustrator. I also developed and optimized commercial websites, contributing significantly to the growth and online presence of communities.
+          <span class="text-neo-blue">Jan 2016 - Feb 2017</span> -> As a gaming community consultant, I improved community engagement and brand visibility through targeted SEO strategies and impactful collateral created with Adobe Photoshop and Illustrator. I also developed and optimized commercial websites, contributing significantly to the growth and online presence of communities.
           </li>
         </ui>`,
         };
@@ -196,7 +196,7 @@ export default function Home() {
     return {
       __html: `
       <p>${commandValueInserted}: command not found</p>\n
-      <p>Type the command <b class="text-red-300">help</b> to display hte list of avaiable commands.</p>`,
+      <p>Type the command <b class="text-neo-pink">help</b> to display hte list of avaiable commands.</p>`,
     };
   }
 
@@ -224,18 +224,18 @@ export default function Home() {
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen">
-      <div className="h-full m-4 w-[800px]" onClick={enfocarInput}>
-        <div className="flex bg-slate-500 items-center p-2 rounded-t-xl">
+    <main className="flex min-h-screen items-center justify-center">
+      <div className="m-4 h-full w-[800px]" onClick={enfocarInput}>
+        <div className="flex items-center rounded-t-xl bg-slate-500 p-2">
           <div className="flex">
-            <div className="w-3 h-3 bg-red-400 rounded-full ml-3"></div>
-            <div className="w-3 h-3 bg-yellow-400 rounded-full ml-2"></div>
-            <div className="w-3 h-3 bg-green-400 rounded-full ml-2"></div>
+            <div className="ml-3 h-3 w-3 rounded-full bg-red-400"></div>
+            <div className="ml-2 h-3 w-3 rounded-full bg-yellow-400"></div>
+            <div className="ml-2 h-3 w-3 rounded-full bg-green-400"></div>
           </div>
-          <p className="text-center flex-1">rubenmaierenzler@desktop</p>
+          <p className="flex-1 text-center">rubenmaierenzler@desktop</p>
         </div>
         <div
-          className="flex flex-col bg-slate-600 overflow-auto p-4 max-h-[500px] sm:h-[500px]"
+          className="flex max-h-[500px] flex-col overflow-auto bg-slate-600 p-4 sm:h-[500px]"
           ref={scrollRef}
         >
           {commandsRan?.map((h, index) => (
@@ -249,7 +249,7 @@ export default function Home() {
                     {h.commandExecuted}
                   </p>
                   <div
-                    className="ml-8 mb-8"
+                    className="mb-8 ml-8"
                     dangerouslySetInnerHTML={h.actionShowed}
                   ></div>
                 </>
@@ -263,14 +263,14 @@ export default function Home() {
           ))}
         </div>
         <div className="flex">
-          <div className="bg-slate-900 flex-none p-2 rounded-bl-xl">
+          <div className="flex-none rounded-bl-xl bg-slate-900 p-2">
             <p className="pl-5">&gt; {guestName}: ~/rub/portfolio:</p>
           </div>
-          <div className="bg-slate-800 w-full p-2 rounded-br-xl">
+          <div className="w-full rounded-br-xl bg-slate-800 p-2">
             <input
               ref={inputRef}
               type="text"
-              className="bg-transparent border-none outline-none w-full"
+              className="w-full border-none bg-transparent outline-none"
               value={
                 !isFocused && !commandValueInserted
                   ? showCursor
