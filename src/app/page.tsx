@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <main className="flex h-screen w-screen items-center justify-center p-4">
       <div
-        className="flex h-full w-full flex-col sm:h-2/4 sm:w-3/4 lg:h-1/2 lg:w-1/2"
+        className="flex h-full w-full flex-col sm:h-3/4 sm:w-3/4 lg:h-1/2 lg:w-1/2"
         onClick={enfocarInput}
       >
         <ConsoleTitleBar />
