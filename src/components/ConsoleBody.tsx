@@ -19,7 +19,7 @@ export function ConsoleBody({
 
   return (
     <div
-      className="h-full max-h-full flex-col overflow-y-auto bg-slate-600 p-4 lg:h-[500px]"
+      className=" h-full flex-col overflow-y-auto bg-slate-600 p-4 lg:h-[500px]"
       ref={scrollRef}
     >
       {commandsRan?.map((h, index) => (
