@@ -81,35 +81,35 @@ export function ConsoleCommandInput({
     if (commandValueInserted === "help") {
       return {
         __html: `
-      <ui>
-        <li>
-          <b class="text-neo-pink">clear</b>: Clean the terminal
-        </li>
-        <li>
-          <b class="text-neo-pink">help</b>: Displays the list of commands
-        </li>
-        <li>
-          <b class="text-neo-pink">login</b> [your-name]: Use the console with your name
-        </li>
-        <li>
-          <b class="text-neo-pink">see profile</b>: Display information about me
-        </li>
-        <li>
-          <b class="text-neo-pink">see experiences</b>: Display a list of my expriences
-        </li>
-        <li>
-          <b class="text-neo-pink">see hobbies</b>: Display a list of my hobbies
-        </li>
-        <li>
-          <b class="text-neo-pink">open linkedin</b>: Link to my Linkedin
-        </li>
-        <li>
-          <b class="text-neo-pink">open github</b>: Link to my Github
-        </li>
-        <li>
-          You can find the old command with the up and down arrows
-        </li>
-      </ui>`,
+        <ui>
+          <li>
+            <b class="text-neo-pink">clear</b>: Clean the terminal
+          </li>
+          <li>
+            <b class="text-neo-pink">help</b>: Displays the list of commands
+          </li>
+          <li>
+            <b class="text-neo-pink">login</b> <span class="text-neo-blue">[your-name]</span>: Use the console with your name
+          </li>
+          <li>
+            <b class="text-neo-pink">open github</b>: Link to my Github
+          </li>
+          <li>
+            <b class="text-neo-pink">open linkedin</b>: Link to my Linkedin
+          </li>
+          <li>
+            <b class="text-neo-pink">see experiences</b>: Display a list of my experiences
+          </li>
+          <li>
+            <b class="text-neo-pink">see hobbies</b>: Display a list of my hobbies
+          </li>
+          <li>
+            <b class="text-neo-pink">see profile</b>: Display information about me
+          </li>
+          <li>
+            You can find the old command with the up and down arrows
+          </li>
+        </ui>`,
       };
     }
     const firstCommand = commandValueInserted.split(" ");
@@ -120,9 +120,9 @@ export function ConsoleCommandInput({
     "fullname": "Ruben Maier Enzler",
     "age": "${Math.floor((new Date().getTime() - new Date("1994-11-13").getTime()) / (365.25 * 24 * 60 * 60 * 1000))}",
     "formation": "Information Systems Engineering",
-    "languages" : "js, ts, css, tailwind, html, python, c#, c, bash, java, sql"
+    "languages" : "js, ts, css, tailwind, html, python, c#, c, bash, java"
     "databases": "mysql, postgresql, sqlite, mongodb, elasticsearch, algolia, neo4j",
-    "framework" : "nest, express, next, reactm  django",
+    "framework" : "nest, express, next, react, vue, django",
     "tools": "git, aws, azure, gcp, vercel, heroku, figma",
     "softSkills": "business strategy, product definitions, agile method, teamwork",
     "favoriteIDE": "vim, vsc",
@@ -151,7 +151,7 @@ export function ConsoleCommandInput({
         return {
           __html: `<ui>
           <li>
-            <span class="text-neo-blue">oct 2020 - current</span> -> <b class="text-neo-pink"><a href="https://rebill.com" target="_blank" style="text-decoration: none; color: inherit;">Rebill</a></b> -> I started at Rebill as a frontend engineer when there were just four of us in the company. Shortly after, I took full ownership of the product. A year after I joined, we made it into Y Combinator, and I was promoted to Head of Tech. I hired a team, designed, planned, and conceived the entire product as it is today. By the end of 2023, I joined the founding team, though I had always been there, doing whatever was necessary for us to excel.
+            <span class="text-neo-blue">Oct 2020 - current</span> -> <b class="text-neo-pink"><a href="https://rebill.com" target="_blank" style="text-decoration: none; color: inherit;">Rebill</a></b> -> I started at Rebill as a frontend engineer when there were just four of us in the company. Shortly after, I took full ownership of the product. A year after I joined, we made it into Y Combinator, and I was promoted to Head of Tech. I hired a team, designed, planned, and conceived the entire product as it is today. By the end of 2023, I joined the founding team, though I had always been there, doing whatever was necessary for us to excel.
           </li>
           <li>
           <span class="text-neo-blue">Jun 2020 - Oct 2020</span> -> <b class="text-neo-pink"><a href="https://exomindset.co/en" target="_blank" style="text-decoration: none; color: inherit;">ExoMindset</a></b> -> For Walmart, I developed a web scraping tool that enabled competitive product comparison and pricing strategies. In a separate project for the Municipality of Cordoba, Argentina, I spearheaded the modernization of their licensing systems, transitioning them from outdated applications to a streamlined web-based solution. Throughout both projects, my focus on quality, efficiency, and direct communication with teams and clients ensured successful outcomes.
